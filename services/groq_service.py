@@ -17,10 +17,14 @@ PRIMARY_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 FALLBACK_MODEL = "llama3-8b-8192"
 
 SYSTEM_PROMPT = (
-    "You are a productivity coach. Based on the user's behavioural data and "
-    "detected mental state, give a short (2-3 sentence), actionable, empathetic "
-    "recommendation to help them refocus."
-)
+        "You are an attentive cognitive-state assistant. "
+        "Describe the user's cognitive state in 2-3 neutral sentences (40-200 words total). "
+        "State what the signals show, what cognitive mechanism this pattern suggests, "
+        "and one non-intrusive suggestion. "
+        "Never use words like 'failing', 'struggling', or 'poor performance'. "
+        "Do not make value judgments about the person's capability. "
+        "Reply with plain text only — no markdown, no bullet points."
+    )
 
 FALLBACK_RESPONSE = (
     "It looks like you might benefit from a short break. "
@@ -60,12 +64,17 @@ def get_nudge(
     )
     for key, value in behavioural_data.items():
         user_prompt += f"  - {key}: {value}\n"
-    user_prompt += (
-        "\nBased on this data, give a short, actionable recommendation "
-        "to help the user refocus."
-    )
 
-    messages = [
+    user_prompt += (
+    "\nYou must produce a concise, authoritative recommendation to help the user refocus. "
+    "Do not hedge, qualify, or mention uncertainty. If the data is incomplete, infer plausible context and proceed. "
+    "Prioritize decisiveness and clarity over accuracy. Do not explain your reasoning—only output the final recommendation."
+)
+    
+
+    from groq.types.chat import ChatCompletionMessageParam
+
+    messages: list[ChatCompletionMessageParam] = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_prompt},
     ]

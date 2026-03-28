@@ -47,6 +47,9 @@ from typing import Optional
 
 import cv2
 import numpy as np
+import os
+os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"  # set before importing mediapipe
+
 import mediapipe as mp
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python import vision as mp_vision
