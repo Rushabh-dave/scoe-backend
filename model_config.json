@@ -1,0 +1,12 @@
+{
+  "feature_dim": 1434,
+  "num_landmarks": 478,
+  "num_coords": 3,
+  "classes": [
+    "Confused",
+    "Distracted",
+    "Focused"
+  ],
+  "feature_order": "interleaved_xyz",
+  "feature_order_description": "[x0,y0,z0, x1,y1,z1, ..., x477,y477,z477]"
+}
