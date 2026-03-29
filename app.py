@@ -16,10 +16,14 @@ Endpoints:
 import os
 import sys
 import logging
-
+import os
+from flask import Flask, jsonify
 import dotenv
 from flask import Flask, jsonify
 from flask_cors import CORS
+
+os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"
+os.environ["MESA_GL_VERSION_OVERRIDE"] = "3.3"  # add this too
 
 # ── Ensure backend_v3 package root is on sys.path ────────────────────────────
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
